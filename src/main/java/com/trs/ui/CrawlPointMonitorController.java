@@ -32,11 +32,10 @@ public class CrawlPointMonitorController {
     @RequestMapping(value="/list")
     public List<UserEmail> list(){
         List<UserEmail> list = userEmailService.findAll();
-        if(list != null){
-            for(UserEmail ue : list){
-                LOGGER.info("id:" + ue.getId() + " name:" + ue.getName() + " email:" + ue.getEmail());
-            }
-        }
+        LOGGER.debug("debug日志");
+        LOGGER.info("info日志");
+        LOGGER.warn("warn日志");
+        LOGGER.error("error日志");
         return list;
     }
 
