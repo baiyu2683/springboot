@@ -1,29 +1,25 @@
 package com.trs.dao;
 
-import com.trs.bean.UserEmail;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import com.trs.bean.UserEmail;
+
+import java.util.List;
 
 /**
  * Created by zhangheng on 16-7-26.
  */
-@Repository
-@Transactional
-public class UserEmailDao {
+public interface UserEmailDao extends GenericDAO<UserEmail, Integer>{
+    /**
+     * 根据条件查询
+     * @param criterion
+     * @return
+     */
+    List<UserEmail> findByCriterion(UserEmailCriterion criterion);
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    private Session getSession(){
-        return sessionFactory.getCurrentSession();
-    }
-
-    public void save(UserEmail userEmail){
-        getSession().delete(userEmail);
-    }
-
+    /**
+     * 根据用户名和邮箱查询一条记录
+     * @param criterion
+     * @return
+     */
+    UserEmail findByNameAndEmail(UserEmailCriterion criterion);
 }
