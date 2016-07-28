@@ -14,14 +14,20 @@
             <charset>utf-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>../logs/cpm-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>../logs/cpm-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-    <logger name="com.trs">
-        <appender-ref ref="FILE" />
-    </logger>
-    <root level="debug">
+    <logger name="com.trs.main"/>
+    <logger name="com.trs.test"/>
+    <logger name="org.hibernate" level="ERROR" />
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.logicalcobwebs" level="WARN" />
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 </configuration>

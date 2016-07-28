@@ -35,7 +35,7 @@ public class UserEmailController {
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public Map add(){
+    public Map<String,Object> add(){
         Map<String, Object> map = new HashMap<String, Object>();
         UserEmail ue = new UserEmail();
         ue.setName("zhheng123123");
@@ -46,7 +46,7 @@ public class UserEmailController {
     }
 
     @RequestMapping(value="/delete", method = RequestMethod.DELETE)
-    public Map delete(){
+    public Map<String,Object> delete(){
         Map<String, Object> map = new HashMap<String, Object>();
         UserEmail ue = new UserEmail();
         ue.setId(1);
@@ -56,14 +56,15 @@ public class UserEmailController {
     }
 
     @RequestMapping(value="/update", method = RequestMethod.PUT)
-    public Map update(){
+    public Map<String,Object> update(@RequestParam(value = "id")String id){
         Map<String, Object> map = new HashMap<String, Object>();
         UserEmail ue = new UserEmail();
         ue.setId(1);
-        ue.setName("zhheng");
-        ue.setEmail("zhangheng2683@gmail.com");
+        ue.setName("追忆流年时光");
+        ue.setEmail("zhuiyiliunianshiguang@gmail.com");
         userEmailService.saveOrUpdate(ue);
         map.put("result","success");
+        map.put("json",id);
         return map;
     }
 }
