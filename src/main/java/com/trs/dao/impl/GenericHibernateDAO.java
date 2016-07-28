@@ -164,7 +164,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 			return new PagedArrayList<T>();
 		criteria.setProjection(null).setFirstResult((int) offsetLimit.getOffset())
 				.setMaxResults(offsetLimit.getLimit());
-		if (null != orders) {
+		if (null != orders || orders.length > 0) {
 			for (Order order : orders) {
 				criteria.addOrder(order);
 			}

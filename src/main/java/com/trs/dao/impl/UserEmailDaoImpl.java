@@ -1,11 +1,14 @@
 package com.trs.dao.impl;
 
+import com.trs.bean.OffsetLimit;
 import com.trs.bean.UserEmail;
 import com.trs.dao.UserEmailCriterion;
 import com.trs.dao.UserEmailDao;
+import com.trs.util.PagedArrayList;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,12 +41,12 @@ public class UserEmailDaoImpl extends GenericHibernateDAO<UserEmail, Integer>  i
     }
 
     @Override
-    public List<UserEmail> findByCriterion(UserEmailCriterion criterion) {
-        return buildCriteria(criterion).list();
+    public UserEmail findByNameAndEmail(UserEmailCriterion criterion){
+        return (UserEmail) buildCriteria(criterion).uniqueResult();
     }
 
     @Override
-    public UserEmail findByNameAndEmail(UserEmailCriterion criterion){
-        return (UserEmail) buildCriteria(criterion).uniqueResult();
+    public PagedArrayList<UserEmail> findPaged(UserEmailCriterion criterion, OffsetLimit offsetLimit) {
+        return super.findByPage(this.buildCriteria(criterion), offsetLimit);
     }
 }

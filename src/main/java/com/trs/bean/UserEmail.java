@@ -1,7 +1,11 @@
 package com.trs.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.trs.system.Const;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by zhangheng on 16-7-26.

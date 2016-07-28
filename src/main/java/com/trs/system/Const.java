@@ -1,20 +1,23 @@
 package com.trs.system;
 
 public class Const {
-	
-	public static final String DOCUMENT_FIELD_TITLE = "IR_URLTITLE";
-	
-	public static final String DOCUMENT_FIELD_CONTENT = "IR_CONTENT";
-	
-	public static final String DOCUMENT_FIELD_SITENAME = "IR_SITENAME";
-	
-	public static final String DOCUMENT_FIELD_CHANNEL = "IR_CHANNEL";
-	
-	/**
-	 * 字段名 - 发生时间,格式为：yyyy.MM.dd hh:mm:ss
-	 */
-	public static final String DOCUMENT_FIELD_LOADTIME = "IR_LOADTIME";
-	
-	public static final String DOCUMENT_FIELD_REPLIES = "IR_REPLIES";
-	
+	//转json时日期格式化
+	public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	//返回结果
+	public static final String RETURN_RESULT_SUCCES = "success";
+
+	public static final String RETURN_RESULT_FAILURE = "failure";
+	//返回信息
+	public static final String RETURN_MESSAGE_SYSTEMERROR = "系统错误";
+
+	public static final String RETURN_MESSAGE_PARAMETERERROR = "参数错误";
+
+	public static final String RETURN_MESSAGE_DUPLICATE = "数据已存在";
+
+	public static final String RETURN_MESSAGE_NOTEXISTS = "数据不存在";
+	//分页大小
+	public static final Integer PAGE_SIZE = 10;
+	//数字
+	public static final Integer NUM_ONE = 1;
+
 }

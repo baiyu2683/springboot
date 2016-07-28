@@ -39,19 +39,19 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.logicalcobwebs</groupId>-->
-			<!--<artifactId>proxool</artifactId>-->
-			<!--<version>0.9.1</version>-->
-			<!--&lt;!&ndash;<scope>compile</scope>&ndash;&gt;-->
-		<!--</dependency>-->
-
 		<dependency>
-			<groupId>com.cloudhopper.proxool</groupId>
+			<groupId>org.logicalcobwebs</groupId>
 			<artifactId>proxool</artifactId>
 			<version>0.9.1</version>
-			<scope>compile</scope>
+			<!--<scope>compile</scope>-->
 		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>com.cloudhopper.proxool</groupId>-->
+			<!--<artifactId>proxool</artifactId>-->
+			<!--<version>0.9.1</version>-->
+			<!--<scope>compile</scope>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>commons-lang</groupId>
