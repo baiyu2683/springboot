@@ -34,14 +34,22 @@ public interface UserEmailService {
 
     /**
      * 保存或更新一条记录
-     * @param userEmail
+     * @param userEmailJsonData
      * @return
      */
-    public UserEmail saveOrUpdate(UserEmail userEmail);
+    public List<Map<String, Object>> addUserEmail(String userEmailJsonData);
 
     /**
-     * 删除一条记录
-     * @param userEmail
+     * 根据id列表删除数据
+     * @param ids
+     * @return
      */
-    public void delete(UserEmail userEmail);
+    public List<Map<String, Object>> deleteByIds(String ids);
+
+    /**
+     * 更新邮件列表信息
+     * @param userEmailJsonData
+     * @return
+     */
+    public List<Map<String, Object>> updateUserEmails(String userEmailJsonData);
 }

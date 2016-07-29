@@ -1,5 +1,6 @@
 package com.trs.service.impl;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trs.bean.OffsetLimit;
 import com.trs.bean.UserEmail;
@@ -8,16 +9,15 @@ import com.trs.dao.UserEmailDao;
 import com.trs.service.UserEmailService;
 import com.trs.system.Const;
 import com.trs.util.PagedArrayList;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by Administrator on 2016/7/27.
@@ -75,12 +75,99 @@ public class UserEmailServiceImpl implements UserEmailService {
     }
 
     @Override
-    public UserEmail saveOrUpdate(UserEmail userEmail) {
-        return userEmailDao.makePersistent(userEmail);
+    public List<Map<String, Object>> addUserEmail(String userEmailJsonData) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        ObjectMapper om = new ObjectMapper();
+        if(StringUtils.isNotBlank(userEmailJsonData)){
+            try {
+                JavaType javaType = om.getTypeFactory().constructCollectionType(Set.class,UserEmail.class);
+                Set<UserEmail> userEmails = om.readValue(userEmailJsonData, javaType);
+                for(UserEmail ue : userEmails){
+                    UserEmailCriterion criterion = new UserEmailCriterion();
+                    criterion.setName(ue.getName());
+                    criterion.setEmail(ue.getEmail());
+                    UserEmail userEmail = userEmailDao.findByNameAndEmail(criterion);
+                    if (userEmail == null){
+                        userEmail = userEmailDao.makePersistent(ue);
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("result", "success");
+                        map.put("data", userEmail);
+                        list.add(map);
+                    }else{
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("result", "failure");
+                        map.put("errorMsg", Const.RETURN_MESSAGE_DUPLICATE);
+                        map.put("data", userEmail);
+                        list.add(map);
+                    }
+                }
+            } catch (IOException e) {
+                LOGGER.info("转换失败!", e);
+            }
+        }
+        return list;
     }
 
     @Override
-    public void delete(UserEmail userEmail) {
-        userEmailDao.makeTransient(userEmail);
+    public List<Map<String, Object>> deleteByIds(String ids) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        if(StringUtils.isNotBlank(ids)){
+            try{
+                String[] idsStr = ids.split(",");
+                for(String id : idsStr){
+                    try {
+                        UserEmail ue = userEmailDao.findById(Integer.parseInt(id), false);
+                        userEmailDao.makeTransient(ue);
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("result", Const.RETURN_RESULT_SUCCES);
+                        map.put("data", id);
+                        list.add(map);
+                    }catch (Exception e){
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("result", Const.RETURN_RESULT_FAILURE);
+                        map.put("errorMsg", Const.RETURN_MESSAGE_PARAMETERERROR);
+                        map.put("data", id);
+                        list.add(map);
+                    }
+                }
+            }catch(Exception e){
+                LOGGER.error("转换失败!", e);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> updateUserEmails(String userEmailJsonData) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        ObjectMapper om = new ObjectMapper();
+        if(StringUtils.isNotBlank(userEmailJsonData)){
+            try {
+                JavaType javaType = om.getTypeFactory().constructCollectionType(List.class,UserEmail.class);
+                List<UserEmail> userEmails = om.readValue(userEmailJsonData, javaType);
+                for(UserEmail ue : userEmails){
+                    Integer id = ue.getId();
+                    UserEmail userEmail = userEmailDao.findById(id, true);
+                    try{
+                        userEmail.setName(ue.getName());
+                        userEmail.setEmail(ue.getEmail());
+                        userEmail = userEmailDao.makePersistent(userEmail);
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("result", Const.RETURN_RESULT_SUCCES);
+                        map.put("data", userEmail);
+                        list.add(map);
+                    }catch(Exception e){
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("result", Const.RETURN_RESULT_FAILURE);
+                        map.put("errorMsg", Const.RETURN_MESSAGE_PARAMETERERROR);
+                        map.put("data", ue);
+                        list.add(map);
+                    }
+                }
+            } catch (IOException e) {
+                LOGGER.info("转换失败!", e);
+            }
+        }
+        return list;
     }
 }

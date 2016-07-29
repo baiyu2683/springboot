@@ -52,4 +52,18 @@ public class UserEmail {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public int hashCode(){
+        return this.name.hashCode() + this.email.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == null) return false;
+        if(!(o instanceof UserEmail)) return false;
+        UserEmail ue = (UserEmail) o;
+        return (this.getName() == null)? (ue.getName() == null): this.getName().equals(ue.getName()) &&
+                (this.getEmail() == null)? (ue.getEmail() == null): this.getEmail().equals(ue.getEmail());
+    }
 }
