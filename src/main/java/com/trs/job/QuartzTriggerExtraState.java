@@ -3,6 +3,9 @@ package com.trs.job;
 import org.apache.commons.lang.StringUtils;
 import org.quartz.Trigger;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,6 +13,8 @@ import java.util.Date;
  * Quartz触发器的运行统计信息.
  * @see Trigger
  */
+@Entity
+@Table(name = "quartz_trigger_extra_state")
 public class QuartzTriggerExtraState implements Serializable {
 
 	private static final long serialVersionUID = 2961456272685770370L;
@@ -18,9 +23,11 @@ public class QuartzTriggerExtraState implements Serializable {
 	public static final int LAST_NCOUNT=5;
 
 	/** 触发器的名称. */
+	@Id
 	private String name;
 
 	/** 触发器的分组名称. */
+	@Id
 	private String group;
 
 	/** 上一次运行是否成功. */

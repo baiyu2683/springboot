@@ -3,6 +3,9 @@ package com.trs.job;
 import org.apache.commons.lang.StringUtils;
 import org.quartz.Trigger;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,12 +13,14 @@ import java.util.Date;
  * Quartz触发器的信息.
  * @see Trigger
  */
+@Entity
+@Table(name = "quartz_trigger_info")
 public class QuartzTriggerInfo implements Serializable{
 
 	private static final long serialVersionUID = 769652331649937662L;
-
+	@Id
 	private String name;
-
+	@Id
 	private String group;
 
 	private String jobName;

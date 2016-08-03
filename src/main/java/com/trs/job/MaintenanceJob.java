@@ -1,15 +1,18 @@
 package com.trs.job;
 
-import com.trs.service.JobService;
 import org.apache.commons.lang.StringUtils;
+import com.trs.service.JobService;
 import org.quartz.*;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
 
-public class MaintenanceJobFactory implements StatefulJob {
+@DisallowConcurrentExecution
+// implements StatefulJob
+public class MaintenanceJob implements Job {
 
+	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 
 			SchedulerContext schedulerContext;
@@ -24,14 +27,14 @@ public class MaintenanceJobFactory implements StatefulJob {
 			String serviceName=context.getMergedJobDataMap().getString("serviceName");
 			MaintenanceService service = (MaintenanceService)applicationContext.getBean(serviceName);
 
-			if(context.getTrigger().isVolatile()){
-				// 临时生成的Trigger不进行运行监控统计，直接运行任务后返回
-				service.doWork(context);
-				return;
-			}
+//			if(context.getTrigger().isVolatile()){
+//				// 临时生成的Trigger不进行运行监控统计，直接运行任务后返回
+//				service.doWork(context);
+//				return;
+//			}
 			// 非临时生成的Trigger需要进行运行监控统计
-			String triggerName=context.getTrigger().getName();
-			String triggerGroup=context.getTrigger().getGroup();
+			String triggerName=context.getTrigger().getKey().getName();
+			String triggerGroup=context.getTrigger().getJobKey().getGroup();
 			JobService jobService=applicationContext.getBean("jobService",JobService.class);
 			QuartzTriggerExtraState state=jobService.getQuartzTriggerExtraState(triggerName, triggerGroup);
 			if(state==null){

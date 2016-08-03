@@ -10,9 +10,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+@Repository("quartzDao")
+@Transactional
 public class QuartzDaoImpl implements QuartzDao {
 
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
