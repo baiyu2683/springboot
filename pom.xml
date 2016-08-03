@@ -58,6 +58,32 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.4</version>
 		</dependency>
+		<dependency>
+			<groupId>com.trsdc.service</groupId>
+			<artifactId>service-export</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.trsdc.service</groupId>
+			<artifactId>service-interface</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.trsdc.service</groupId>
+			<artifactId>service-interfaceParameter</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>quartz-all</artifactId>
+			<version>1.6.5</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.trs</groupId>
+			<artifactId>crypt</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
