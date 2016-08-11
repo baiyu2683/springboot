@@ -2,8 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.trs</groupId>
   <artifactId>cpm</artifactId>
+	<packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  
+
  	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -42,22 +43,21 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<!--<version>4.3.1.RELEASE</version>-->
-		</dependency>
-
-		<dependency>
-			<groupId>org.logicalcobwebs</groupId>
-			<artifactId>proxool</artifactId>
-			<version>0.9.1</version>
-			<!--<scope>compile</scope>-->
 		</dependency>
 
 		<!--<dependency>-->
-			<!--<groupId>com.cloudhopper.proxool</groupId>-->
+			<!--<groupId>org.logicalcobwebs</groupId>-->
 			<!--<artifactId>proxool</artifactId>-->
 			<!--<version>0.9.1</version>-->
-			<!--<scope>compile</scope>-->
+			<!--&lt;!&ndash;<scope>compile</scope>&ndash;&gt;-->
 		<!--</dependency>-->
+
+		<dependency>
+			<groupId>com.cloudhopper.proxool</groupId>
+			<artifactId>proxool</artifactId>
+			<version>0.9.1</version>
+			<scope>compile</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -65,40 +65,9 @@
 			<version>2.4</version>
 		</dependency>
 		<dependency>
-			<groupId>com.trsdc.service</groupId>
-			<artifactId>service-export</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.trsdc.service</groupId>
-			<artifactId>service-interface</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.trsdc.service</groupId>
-			<artifactId>service-interfaceParameter</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>opensymphony</groupId>
-			<artifactId>quartz-all</artifactId>
-			<version>1.6.5</version>
-			<scope>compile</scope>
-		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.quartz-scheduler</groupId>-->
-			<!--<artifactId>quartz</artifactId>-->
-			<!--<version>2.2.2</version>-->
-		<!--</dependency>-->
-		<dependency>
-			<groupId>com.trs</groupId>
-			<artifactId>crypt</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.trs</groupId>
-			<artifactId>om-key</artifactId>
-			<version>1.0</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 	</dependencies>
 
@@ -107,6 +76,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.hibernate.orm.tooling</groupId>
+				<artifactId>hibernate-enhance-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<configuration>
+							<enableLazyInitialization>true</enableLazyInitialization>
+						</configuration>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
