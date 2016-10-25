@@ -1,6 +1,7 @@
 package com.trs.dao.impl;
 
 import com.trs.bean.OffsetLimit;
+import com.trs.bean.UserEmail;
 import com.trs.dao.GenericDAO;
 import com.trs.util.PagedArrayList;
 import org.hibernate.Criteria;
@@ -8,6 +9,7 @@ import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -169,6 +171,22 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 				criteria.addOrder(order);
 			}
 		}
+		List list = criteria.list();
+		return new PagedArrayList<T>(list, count, offsetLimit.getOffset(), offsetLimit.getLimit());
+	}
+
+	protected PagedArrayList<T> findByPage(Criteria criteria, Projection projection, OffsetLimit offsetLimit, Order... orders) {
+		int count = ((Number) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		if (0 == count)
+			return new PagedArrayList<T>();
+		criteria.setProjection(projection).setFirstResult((int) offsetLimit.getOffset())
+				.setMaxResults(offsetLimit.getLimit());
+		if (null != orders || orders.length > 0) {
+			for (Order order : orders) {
+				criteria.addOrder(order);
+			}
+		}
+		criteria.setResultTransformer(Transformers.aliasToBean(UserEmail.class));
 		List list = criteria.list();
 		return new PagedArrayList<T>(list, count, offsetLimit.getOffset(), offsetLimit.getLimit());
 	}

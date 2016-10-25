@@ -8,8 +8,9 @@ import com.trs.util.PagedArrayList;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
+import org.hibernate.transform.ResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,24 @@ public class UserEmailDaoImpl extends GenericHibernateDAO<UserEmail, Integer>  i
 
     @Override
     public PagedArrayList<UserEmail> findPaged(UserEmailCriterion criterion, OffsetLimit offsetLimit) {
-        return super.findByPage(this.buildCriteria(criterion), offsetLimit);
+        Criteria criteria = this.buildCriteria(criterion);
+        Projection projection = Projections.projectionList()
+                .add(Projections.property("id"),"id")
+                .add(Projections.property("name"),"name")
+                .add(Projections.groupProperty("email"),"email");
+        return super.findByPage(criteria, projection, offsetLimit);
+    }
+
+    @Override
+    public PagedArrayList<UserEmail> findNoDuplicated() {
+        //测试groupby排重
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(UserEmail.class);
+        criteria.setProjection(Projections.projectionList()
+                .add(Projections.property("id"),"id")
+                .add(Projections.property("name"),"name")
+                .add(Projections.groupProperty("email"),"email"));
+        criteria.setResultTransformer(Transformers.aliasToBean(UserEmail.class));
+        List<UserEmail> list = criteria.list();
+        return null;
     }
 }

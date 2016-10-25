@@ -26,6 +26,12 @@ public interface UserEmailService {
     public Map<String,Object> findUserEmail(Integer pageNumber, Integer pageSize, String name, String email);
 
     /**
+     * 返回没有重复值的列表
+     * @return
+     */
+    List<UserEmail> findUserEmailNoDuplicate();
+
+    /**
      * 根据id查询记录
      * @param id
      * @return

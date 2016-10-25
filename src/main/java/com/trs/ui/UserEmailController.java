@@ -34,6 +34,12 @@ public class UserEmailController {
         return map;
     }
 
+    @RequestMapping(value="/noduplicate", method = RequestMethod.GET)
+    public Map<String,Object> noduplicate(){
+        userEmailService.findUserEmailNoDuplicate();
+        return null;
+    }
+
     @RequestMapping(value="/add", method = RequestMethod.POST)
     public List<Map<String, Object>> add(@RequestParam(value = "userEmailJsonData", required = true)String userEmailJsonData){
         List<Map<String, Object>> list = userEmailService.addUserEmail(userEmailJsonData);

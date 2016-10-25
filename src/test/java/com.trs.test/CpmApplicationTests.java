@@ -46,10 +46,11 @@ public class CpmApplicationTests {
     @Test
     public void testUserEmailList() throws Exception{
         String url = baseUrl + "/list";
-        Map<String, Object> map = new HashMap<>();
-        map.put("email","zhangheng2681231231233@gmail.com");
-        map.put("name", "张恒");
-        ResponseEntity<String> result = restTemplate.getForEntity(url + "?email={email}&name={name}", String.class, map);
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("email","zhangheng2681231231233@gmail.com");
+//        map.put("name", "张恒");
+//        ResponseEntity<String> result = restTemplate.getForEntity(url + "?email={email}&name={name}", String.class, map);
+        ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
         LOGGER.info(result.getBody());
     }
 
@@ -111,6 +112,13 @@ public class CpmApplicationTests {
         Map<String, Object> map = new HashMap<>();
         map.put("userEmailJsonData", sb.toString());
         ResponseEntity<String> result = restTemplate.exchange(url + "?userEmailJsonData={userEmailJsonData}", HttpMethod.PUT,null, String.class, map);
+        LOGGER.info(result.getBody());
+    }
+
+    @Test
+    public void testUserEmailList1() throws Exception{
+        String url = baseUrl + "/noduplicate";
+        ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
         LOGGER.info(result.getBody());
     }
 }

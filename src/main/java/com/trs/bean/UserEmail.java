@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="useremail")
-public class UserEmail implements FieldHandled{
+public class UserEmail{// implements FieldHandled{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,20 +23,21 @@ public class UserEmail implements FieldHandled{
     @Column(length=255)
     private String email;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "longtext")
-    private String doc;
-
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "longblob")
-    private byte[] headPic;
-
-    private FieldHandler fieldHandler;
+//    @Basic(fetch = FetchType.LAZY)
+//    @Column(columnDefinition = "longtext")
+//    private String doc;
+//
+//    @Basic(fetch = FetchType.LAZY)
+//    @Column(columnDefinition = "longblob")
+//    private byte[] headPic;
+//
+//    private FieldHandler fieldHandler;
 
     public UserEmail() {
     }
 
-    public UserEmail(String name, String email) {
+    public UserEmail(Integer id, String name, String email) {
+        this.id = id;
         this.name = name;
         this.email = email;
     }
@@ -65,37 +66,37 @@ public class UserEmail implements FieldHandled{
         this.email = email;
     }
 
-    public String getDoc() {
-        if(this.doc != null) {
-            return this.doc;
-        }
+//    public String getDoc() {
+//        if(this.doc != null) {
+//            return this.doc;
+//        }
+//
+//        if (fieldHandler != null) {
+//            return (String) fieldHandler.readObject(this, "doc", doc);
+//        } else {
+//            return null;
+//        }
+//    }
 
-        if (fieldHandler != null) {
-            return (String) fieldHandler.readObject(this, "doc", doc);
-        } else {
-            return null;
-        }
-    }
-
-    public void setDoc(String doc) {
-        this.doc = doc;
-    }
-
-    public byte[] getHeadPic() {
-        if(this.headPic != null) {
-            return this.headPic;
-        }
-
-        if (fieldHandler != null) {
-            return (byte[]) fieldHandler.readObject(this, "headPic", headPic);
-        } else {
-            return null;
-        }
-    }
-
-    public void setHeadPic(byte[] headPic) {
-        this.headPic = headPic;
-    }
+//    public void setDoc(String doc) {
+//        this.doc = doc;
+//    }
+//
+//    public byte[] getHeadPic() {
+//        if(this.headPic != null) {
+//            return this.headPic;
+//        }
+//
+//        if (fieldHandler != null) {
+//            return (byte[]) fieldHandler.readObject(this, "headPic", headPic);
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    public void setHeadPic(byte[] headPic) {
+//        this.headPic = headPic;
+//    }
 
     @Override
     public int hashCode(){
@@ -110,14 +111,14 @@ public class UserEmail implements FieldHandled{
         return (this.getName() == null)? (ue.getName() == null): this.getName().equals(ue.getName()) &&
                 (this.getEmail() == null)? (ue.getEmail() == null): this.getEmail().equals(ue.getEmail());
     }
-
-    @Override
-    public void setFieldHandler(FieldHandler fieldHandler) {
-        this.fieldHandler = fieldHandler;
-    }
-
-    @Override
-    public FieldHandler getFieldHandler() {
-        return this.fieldHandler;
-    }
+//
+//    @Override
+//    public void setFieldHandler(FieldHandler fieldHandler) {
+//        this.fieldHandler = fieldHandler;
+//    }
+//
+//    @Override
+//    public FieldHandler getFieldHandler() {
+//        return this.fieldHandler;
+//    }
 }

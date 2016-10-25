@@ -26,4 +26,9 @@ public interface UserEmailDao extends GenericDAO<UserEmail, Integer>{
      * @return
      */
     PagedArrayList<UserEmail> findPaged(UserEmailCriterion criterion, OffsetLimit offsetLimit);
+
+    /**
+     * 去重
+     */
+    PagedArrayList<UserEmail> findNoDuplicated();
 }

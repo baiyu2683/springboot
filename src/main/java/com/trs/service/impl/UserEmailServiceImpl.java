@@ -48,18 +48,18 @@ public class UserEmailServiceImpl implements UserEmailService {
             if(pageSize == null) pageSize = Const.PAGE_SIZE;
             OffsetLimit offsetLimit = new OffsetLimit((pageNumber - Const.NUM_ONE) * pageSize, pageSize);
             PagedArrayList<UserEmail> userEmails = userEmailDao.findPaged(criterion, offsetLimit);
-//            map.put("result", Const.RETURN_RESULT_SUCCES);
-//            map.put("pageNumber", pageNumber);
-//            map.put("pageSize", pageSize);
-//            map.put("totalRecords", userEmails.getTotalRecords());
-//            map.put("totalPages", userEmails.getTotalPages());
-//            map.put("name", name);
-//            map.put("email", email);
-//            map.put("data",userEmails.getPageData());
+            map.put("result", Const.RETURN_RESULT_SUCCES);
+            map.put("pageNumber", pageNumber);
+            map.put("pageSize", pageSize);
+            map.put("totalRecords", userEmails.getTotalRecords());
+            map.put("totalPages", userEmails.getTotalPages());
+            map.put("name", name);
+            map.put("email", email);
+            map.put("data",userEmails.getPageData());
             LOGGER.info("查询出来了.....");
             for(UserEmail ue : userEmails.getPageData()){
                 LOGGER.info("又一次查询...");
-                LOGGER.info("doc:" + ue.getDoc());
+//                LOGGER.info("doc:" + ue.getDoc());
             }
         }catch(Exception e){
             LOGGER.error("查询预警邮件接收用户列表出错", e);
@@ -72,6 +72,13 @@ public class UserEmailServiceImpl implements UserEmailService {
             map.put("errorMsg", Const.RETURN_MESSAGE_SYSTEMERROR);
         }
         return map;
+    }
+
+    @Override
+    public List<UserEmail> findUserEmailNoDuplicate() {
+        OffsetLimit offsetLimit = new OffsetLimit(0, 3);
+        PagedArrayList<UserEmail> userEmails = userEmailDao.findNoDuplicated();
+        return null;
     }
 
     @Override

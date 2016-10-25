@@ -16,7 +16,7 @@ public class Const {
 
 	public static final String RETURN_MESSAGE_NOTEXISTS = "数据不存在";
 	//分页大小
-	public static final Integer PAGE_SIZE = 10;
+	public static final Integer PAGE_SIZE = 2;
 	//数字
 	public static final Integer NUM_ONE = 1;
 
